@@ -29,14 +29,14 @@ Auth::routes();
 Route::get('email/verify', [VerificationController::class, 'show'])->name('verification.notice');
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-    return view('auth.confirmPassword', ['data' => Auth::user()]);
-})->middleware(['auth'])->name('verification.verify');
+})->middleware(['auth','set.password'])->name('verification.verify');
 Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
 
-Route::Post('/register/password', [SetPasswordController::class, 'update']);
+Route::get('/register/password', [SetPasswordController::class, 'show'])->middleware('auth')->name('confirm');
+Route::Post('/register/password', [SetPasswordController::class, 'update'])->middleware('auth');
 
-Route::get('/applicants',[HomeController::class , 'showApplicants']);
-Route::post('/applicants/set',[HomeController::class , 'store']);
+Route::get('/applicants',[HomeController::class , 'showApplicants'])->middleware('auth');
+Route::post('/applicants/set',[HomeController::class , 'store'])->middleware('auth');
 
-Route::get('/my-applicants',[HomeController::class, 'myApplicants']);
+Route::get('/my-applicants',[HomeController::class, 'myApplicants'])->middleware('auth');
 

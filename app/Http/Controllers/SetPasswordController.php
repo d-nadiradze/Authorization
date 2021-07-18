@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class SetPasswordController extends Controller
 {
+    public function show(){
+        return redirect('auth.confirmPassword');
+    }
+
     public function update(Request $request , passwordRequest $validateReq){
 
         $validate = $validateReq->validated();
