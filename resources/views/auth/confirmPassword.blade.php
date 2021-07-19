@@ -7,9 +7,8 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">{{ __('Register') }}</div>
-
                     <div class="card-body">
-                        <form method="POST" action="/register/password">
+                        <form method="POST" action="{{route('set_password')}}">
                             @csrf
                             <input type="hidden" name="user_id" value="{{$data->id}}">
 

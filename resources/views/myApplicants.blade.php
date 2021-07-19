@@ -13,14 +13,15 @@
                                 <th class="px-4 py-3">Surname</th>
                                 <th class="px-4 py-3">Phone Number</th>
                             </tr>
-                            @foreach($applicant as $applicants)
-                                @if( Auth::user()->id == $applicants->user_id)
+@foreach($user as $applicant)
+    @foreach($applicant->applicants as $item)
+
                                 <tr class="bg-gray-100 border-b border-gray-200">
-                                    <td class="px-4 py-3">{{$applicants->name}}</td>
-                                    <td class="px-4 py-3">{{$applicants->surname}}</td>
-                                    <td class="px-4 py-3">{{$applicants->phone_number}}</td>
+                                    <td class="px-4 py-3">{{$item->name}}</td>
+                                    <td class="px-4 py-3">{{$item->surname}}</td>
+                                    <td class="px-4 py-3">{{$item->phone_number}}</td>
                                 </tr>
-                                @endif
+        @endforeach
                             @endforeach
                         </table>
                     </div>

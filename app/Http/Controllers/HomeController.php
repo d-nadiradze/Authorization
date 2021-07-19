@@ -29,7 +29,7 @@ class HomeController extends Controller
         return view('home', ['data' => User::all()]);
     }
     public function myApplicants(){
-        return view('myApplicants', ['user' => User::all(),'applicant' => Applicant::all()]);
+        return view('myApplicants', ['user' => User::with(['applicants'])->where('id','=',Auth::user()->id)->get()]);
     }
 
     public function showApplicants(){
@@ -38,13 +38,15 @@ class HomeController extends Controller
 
     public function store(Request $request)
  {
-    if( $request->has('name') ){
-        $data = Applicant::find($request->name);
-        $data->status = 'on';
-        $data->user_id =$request->user_id;
-        $data->save();}
-
+    if( $request->has('name') ) {
+        foreach ($request->name as $id) {
+            $data = Applicant::find($id);
+            $data->status = 'on';
+            $data->user_id = $request->user_id;
+            $data->save();
+        }
         return redirect()->back();
+    }
   }
 
 

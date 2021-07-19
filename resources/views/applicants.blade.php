@@ -28,7 +28,7 @@
                                             <td class="px-4 py-3">Active</td>
                                             <td class="px-4 py-3 justify-content-center flex ">
                                                 <input type="hidden" name="applicant_name" value="{{$applicants->name}}">
-                                                <input type="checkbox" id="{{$applicants->id}}" name="name" value="{{$applicants->id}}">
+                                                <input type="checkbox" id="{{$applicants->id}}" name="name[]" value="{{$applicants->id}}">
                                             </td>
                                         @else
                                             <td class="px-4 py-3">Inactive</td>

@@ -6,15 +6,15 @@ use App\Http\Requests\passwordRequest;
 use App\Models\User;
 use Error;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SetPasswordController extends Controller
 {
     public function show(){
-        return redirect('auth.confirmPassword');
+        return view('auth.confirmPassword',['data' => Auth::user()]);
     }
 
     public function update(Request $request , passwordRequest $validateReq){
-
         $validate = $validateReq->validated();
 
         if ($validate) {
@@ -25,6 +25,5 @@ class SetPasswordController extends Controller
 
             return redirect('/home');
         }
-        else redirect()->back();
     }
 }

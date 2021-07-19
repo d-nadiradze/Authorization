@@ -30,11 +30,16 @@ Route::get('email/verify', [VerificationController::class, 'show'])->name('verif
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
     return redirect('/home');
-})->middleware(['auth','set.password'])->name('verification.verify');
-Route::get('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
+})->middleware('auth')->name('verification.verify');
+
+Route::post('/email/resend', function (Request $request) {
+    Auth::user()->sendEmailVerificationNotification();
+
+    return redirect()->back()->with(['success' => 'a']);
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::get('/register/password', [SetPasswordController::class, 'show'])->middleware('auth')->name('confirm');
-Route::Post('/register/password', [SetPasswordController::class, 'update'])->middleware('auth');
+Route::post('/register/password', [SetPasswordController::class, 'update'])->middleware('auth')->name('set_password');
 
 Route::get('/applicants',[HomeController::class , 'showApplicants'])->middleware('auth');
 Route::post('/applicants/set',[HomeController::class , 'store'])->middleware('auth');
